@@ -65,7 +65,7 @@ func runCmd(socketPath string, cmd string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer socket.Close()
+	defer func() { _ = socket.Close() }()
 
 	cmd = cmd + "\x00"
 	_, err = socket.Write([]byte(cmd))
